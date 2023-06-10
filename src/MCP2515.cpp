@@ -88,6 +88,10 @@ int MCP2515Class::begin(long baudRate, bool stayInConfigurationMode)
     return 0;
   }
 
+  if( (baudRate == 5E3) && (_clockFrequency == 20E6) )
+    // with a 20MHz clock, the minimum baud rate is 6.25kHz
+    return 0;
+
   const struct {
     long clockFrequency;
     long baudRate;
@@ -118,7 +122,21 @@ int MCP2515Class::begin(long baudRate, bool stayInConfigurationMode)
     { (long)16E6,   (long)20E3, { 0x0f, 0xff, 0x87 } },
     { (long)16E6,   (long)10E3, { 0x1f, 0xff, 0x87 } },
     { (long)16E6,    (long)5E3, { 0x3f, 0xff, 0x87 } },
+
+    { (long)20E6, (long)1000E3, { 0x40, 0xd2, 0x82 } }, // 10 Tq, sp 70%, sjw=2, 3 samples (tested)
+    { (long)20E6,  (long)500E3, { 0x40, 0xf5, 0x85 } }, // 20 Tq, sp 70%, sjw=2, 3 samples (tested)
+    { (long)20E6,  (long)250E3, { 0x41, 0xf5, 0x85 } }, // 20 Tq, sp 70%, sjw=2, 3 samples (tested)
+    { (long)20E6,  (long)200E3, { 0x41, 0xff, 0x87 } }, // 25 Tq, sp 68%, sjw=2, 3 samples
+    { (long)20E6,  (long)125E3, { 0x43, 0xf5, 0x85 } }, // 20 Tq, sp 70%, sjw=2, 3 samples (tested)
+    { (long)20E6,  (long)100E3, { 0x44, 0xf5, 0x85 } }, // 20 Tq, sp 70%, sjw=2, 3 samples
+    { (long)20E6,   (long)80E3, { 0x44, 0xff, 0x87 } }, // 25 Tq, sp 70%, sjw=2, 3 samples
+    { (long)20E6,   (long)50E3, { 0x49, 0xf5, 0x85 } }, // 20 Tq, sp 70%, sjw=2, 3 samples
+    { (long)20E6,   (long)40E3, { 0x49, 0xff, 0x87 } }, // 25 Tq, sp 68%, sjw=2, 3 samples
+    { (long)20E6,   (long)20E3, { 0x58, 0xf5, 0x85 } }, // 20 Tq, sp 70%, sjw=2, 3 samples
+    { (long)20E6,   (long)10E3, { 0x71, 0xf5, 0x85 } }, // 20 Tq, sp 70%, sjw=2, 3 samples
+    { (long)20E6,    (long)5E3, { 0x7f, 0xff, 0x87 } }, // 6.25kHz is as slow as it can go
   };
+  //https://www.kvaser.com/support/calculators/bit-timing-calculator/  (use MCP2510 option)
 
   const uint8_t* cnf = NULL;
 
