@@ -21,7 +21,7 @@ Returns `1` on success, `0` on failure.
 
 ### Set pins
 
-#### MCP2515 / MCP25625
+#### MCP2515 and MCP25625
 
 Override the default `CS` and `INT` pins used by the library. **Must** be called before `CAN.begin(...)`.
 
@@ -47,7 +47,7 @@ This call is optional and only needs to be used if you need to change the defaul
 
 ### Set SPI Frequency
 
-**MCP2515  / MCP25625 only**
+**MCP2515 and MCP25625 only**
 
 Override the default SPI frequency of 10 MHz used by the library. **Must** be called before `CAN.begin(...)`.
 
@@ -60,14 +60,15 @@ This call is optional and only needs to be used if you need to change the defaul
 
 ### Set Clock Frequency
 
-**MCP2515  / MCP25625 only**
+**MCP2515 and MCP25625 only**
 
 Override the default clock source frequency that is connected to the MCP2515. **Must** be called before `CAN.begin(...)`.
 
 ```arduino
 CAN.setClockFrequency(clockFrequency);
 ```
- * `clockFrequency` - new clock frequency to use (`8E6`, `16E6`, `20E6`) connected to MCP2515, defaults to `16 Mhz`
+ * `clockFrequency` - new clock frequency to use (`8E6`, `16E6`, `20E6`)
+connected to MCP2515/MCP25625 OSC pins, defaults to `16 Mhz`
 
 This call is optional and only needs to be used if you need to
 change the clock source frequency connected to the MCP2515.

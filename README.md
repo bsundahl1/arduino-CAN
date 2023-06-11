@@ -6,9 +6,10 @@ An Arduino library for sending and receiving data using CAN bus.
 
 * [Microchip MCP2515](http://www.microchip.com/wwwproducts/en/en010406) based boards/shields
   * [Arduino MKR CAN shield](https://store.arduino.cc/arduino-mkr-can-shield)
+* Microchip MCP25625 based boards/shields
 * [Espressif ESP32](http://espressif.com/en/products/hardware/esp32/overview)'s built-in [SJA1000](https://www.nxp.com/products/analog/interfaces/in-vehicle-network/can-transceiver-and-controllers/stand-alone-can-controller:SJA1000T) compatible CAN controller with an external 3.3V CAN transceiver
 
-### Microchip MCP2515 wiring
+### Microchip MCP2515/MCP25625 wiring
 
 | Microchip MCP2515 | Arduino |
 | :---------------: | :-----: |
@@ -23,7 +24,9 @@ An Arduino library for sending and receiving data using CAN bus.
 
 `CS` and `INT` pins can be changed by using `CAN.setPins(cs, irq)`. `INT` pin is optional, it is only needed for receive callback mode. If `INT` pin is used, it **must** be interrupt capable via [`attachInterrupt(...)`](https://www.arduino.cc/en/Reference/AttachInterrupt).
 
-**NOTE**: Logic level converters must be used for boards which operate at 3.3V.
+**NOTE**: Logic level converters must be used for boards MCP2515
+which operate at 3.3V. The MCP25625 can run on 3.3V or 5V power,
+resolving this issue.
 
 ### Espressif ESP32 wiring
 
